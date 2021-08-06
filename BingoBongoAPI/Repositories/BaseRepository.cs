@@ -73,5 +73,26 @@ namespace BingoBongoAPI.Repositories
         }
 
         #endregion
+
+        #region Delete
+
+        public virtual async Task Delete(object key)
+        {
+            var entity = await _dbSet.FindAsync(key);
+
+            if (entity == null) return;
+
+            try
+            {
+                _dbSet.Remove(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
     }
 }

@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using FluentMigrator.Runner;
+using BingoBongoAPI.Repositories;
+using BingoBongoAPI.Repositories.Contracts;
+using BingoBongoAPI.Services.Contracts;
+using BingoBongoAPI.Services;
 
 namespace BingoBongoAPI
 {
@@ -24,6 +28,7 @@ namespace BingoBongoAPI
             services.AddControllers();
 
             AddRepositories(services);
+            AddServices(services);
             AddDbContext(services);
             AddCorsPolicy(services);
             AddFluentMigrator(services);
@@ -50,7 +55,14 @@ namespace BingoBongoAPI
 
         private void AddRepositories(IServiceCollection services)
         {
-            //services.AddScoped<IMunicipalityTaxesRepository, MunicipalityTaxesRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
+        }
+
+        private void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEventService, EventService>();
         }
 
         private void AddDbContext(IServiceCollection services)
