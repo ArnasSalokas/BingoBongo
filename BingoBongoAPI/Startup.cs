@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using FluentMigrator.Runner;
 
 namespace BingoBongoAPI
 {
@@ -23,8 +24,9 @@ namespace BingoBongoAPI
             services.AddControllers();
 
             AddRepositories(services);
-            //AddDbContext(services);
+            AddDbContext(services);
             AddCorsPolicy(services);
+            AddFluentMigrator(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +72,22 @@ namespace BingoBongoAPI
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
+        }
+
+
+        private void AddFluentMigrator(IServiceCollection services)
+        {
+            // Fluent migrator
+            services
+                .AddFluentMigratorCore()
+                .ConfigureRunner(rb => rb
+                    .AddSqlServer2014()
+                    .WithGlobalConnectionString(config.GetDefaultConnection())
+                    // Define the assembly containing the migrations
+                    .ScanIn(typeof(M201807201046_FirstMigration).Assembly).For.Migrations())
+                // Enable logging to console in the FluentMigrator way
+                .AddLogging(lb => lb.AddFluentMigratorConsole())
+                .BuildServiceProvider(false);
         }
 
         #endregion
