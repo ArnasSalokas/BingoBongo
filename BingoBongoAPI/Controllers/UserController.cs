@@ -1,4 +1,5 @@
 ﻿using BingoBongoAPI.Models.Request;
+using BingoBongoAPI.Models.Response;
 using BingoBongoAPI.Repositories.Contracts;
 using BingoBongoAPI.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +21,13 @@ namespace BingoBongoAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> RegisterUser([FromBody] CreateUserRequest request)
+        public async Task<ActionResult<UserLoginResponse>> RegisterUser([FromBody] CreateUserRequest request)
         {
             try
             {
-                await _userService.CreateUser(request);
+                var response = await _userService.CreateUser(request);
 
-                return Ok();
+                return Ok(response);
             }
             catch (Exception)
             {

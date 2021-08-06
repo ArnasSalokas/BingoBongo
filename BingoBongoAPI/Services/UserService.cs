@@ -1,5 +1,6 @@
 ﻿using BingoBongoAPI.Entities;
 using BingoBongoAPI.Models.Request;
+using BingoBongoAPI.Models.Response;
 using BingoBongoAPI.Repositories.Contracts;
 using BingoBongoAPI.Services.Contracts;
 using System;
@@ -16,13 +17,16 @@ namespace BingoBongoAPI.Services
             _userRepository = userRepository;
         }
 
-        public async Task CreateUser(CreateUserRequest request)
+        public async Task<UserLoginResponse> CreateUser(CreateUserRequest request)
         {
             var user = _userRepository.FindBySlackId(request.Id);
 
             // Add User to DB for the first time, skip other times
             if (user != null)
-                return;
+                return new UserLoginResponse()
+                {
+                    Id = user.Id
+                };
 
             var newUser = new User
             {
@@ -34,6 +38,11 @@ namespace BingoBongoAPI.Services
             };
 
             await _userRepository.Add(newUser);
+
+            return new UserLoginResponse()
+            {
+                Id = newUser.Id
+            };
         }
     }
 }
