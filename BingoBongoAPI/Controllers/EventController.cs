@@ -2,6 +2,7 @@
 using BingoBongoAPI.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,6 +19,20 @@ namespace BingoBongoAPI.Controllers
         }
 
         // create event
+        [HttpPost]
+        public async Task<ActionResult> RegisterUser([FromBody] CreateEventRequest request)
+        {
+            try
+            {
+                await _eventService.CreateEvent(request);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
         // update event
 
