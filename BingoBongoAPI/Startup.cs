@@ -31,7 +31,7 @@ namespace BingoBongoAPI
             AddServices(services);
             AddDbContext(services);
             AddCorsPolicy(services);
-            AddFluentMigrator(services);
+            AddFluentMigrator(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +67,7 @@ namespace BingoBongoAPI
 
         private void AddDbContext(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContext<BingoBongoContext>(options =>
             {
                 var connectionString = Configuration.GetConnectionString("BingoBongo");
                 options.UseSqlServer(connectionString);
@@ -87,7 +87,7 @@ namespace BingoBongoAPI
         }
 
 
-        private void AddFluentMigrator(IServiceCollection services)
+        private void AddFluentMigrator(IServiceCollection services, IConfiguration config)
         {
             // Fluent migrator
             services

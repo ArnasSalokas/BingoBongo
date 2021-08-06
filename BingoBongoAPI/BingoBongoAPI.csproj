@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Response\" />
+    <Folder Include="Infrastructure\Extensions\" />
   </ItemGroup>
 
 
