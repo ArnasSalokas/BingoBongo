@@ -10,14 +10,14 @@ namespace BingoBongoAPI.Repositories
     {
         #region Protected Properties
 
-        protected readonly AppDbContext _dbContext;
+        protected readonly BingoBongoContext _dbContext;
         protected readonly DbSet<T> _dbSet;
 
         #endregion
 
         #region Constructors
 
-        public BaseRepository(AppDbContext dbContext)
+        public BaseRepository(BingoBongoContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<T>();

@@ -1,4 +1,5 @@
 ﻿using BingoBongoAPI.Repositories.Contracts;
+using BingoBongoAPI.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -10,10 +11,18 @@ namespace BingoBongoAPI.Controllers
     [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
-        private readonly IUserRepository userRepository;
-        public EventController(IUserRepository userRepository)
+        private readonly IEventService _eventService;
+        public EventController(IEventService eventService)
         {
-            this.userRepository = userRepository;
+            _eventService = eventService;
         }
+
+        // create event
+
+        // update event
+
+        // delete event
+
+        // create channel
     }
 }
