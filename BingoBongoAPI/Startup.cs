@@ -67,6 +67,7 @@ namespace BingoBongoAPI
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<ISlackService, SlackService>();
         }
 
         private void AddDbContext(IServiceCollection services)
