@@ -14,7 +14,7 @@ namespace BingoBongoAPI.Repositories
 
         }
 
-        public DbSet<User> User{ get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Event> Event { get; set; }
         public DbSet<UserEvent> UserEvent { get; set; }
     }
