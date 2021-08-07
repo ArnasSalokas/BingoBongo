@@ -12,5 +12,6 @@ namespace BingoBongoAPI.Entities
 		public string Description { get; set; }
 		public string Place { get; set; }
 		public DateTime Created { get; set; }
+		public string ChannelId { get; set; }
 	}
 }

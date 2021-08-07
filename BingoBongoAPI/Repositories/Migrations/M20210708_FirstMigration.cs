@@ -27,7 +27,8 @@ namespace BingoBongoAPI.Repositories.Migrations
                 .WithColumn(nameof(Event.Time)).AsDateTime()
                 .WithColumn(nameof(Event.UserId)).AsInt32()
             .WithColumn(nameof(Event.Description)).AsMaxString()
-            .WithColumn(nameof(Event.Created)).AsDateTime();
+            .WithColumn(nameof(Event.Created)).AsDateTime()
+            .WithColumn(nameof(Event.ChannelId)).AsMaxString();
 
             Create.Table(nameof(UserEvent))
                 .WithColumn(nameof(UserEvent.Id)).AsInt32().NotNullable().PrimaryKey().Identity()

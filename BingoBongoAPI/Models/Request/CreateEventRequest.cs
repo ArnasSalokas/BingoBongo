@@ -7,7 +7,7 @@ namespace BingoBongoAPI.Models.Request
 {
     public class CreateEventRequest
     {
-        public int UserId { get; set; }
+        public int UserId { get; set; } // our Database user id which is given when user logs in
         public string Name { get; set; }
         public string Place { get; set; }
         public string Description { get; set; }

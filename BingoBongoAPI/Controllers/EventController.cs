@@ -1,5 +1,6 @@
 ﻿using BingoBongoAPI.Entities;
 using BingoBongoAPI.Models.Request;
+using BingoBongoAPI.Models.Response;
 using BingoBongoAPI.Repositories.Contracts;
 using BingoBongoAPI.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,22 @@ namespace BingoBongoAPI.Controllers
         public EventController(IEventService eventService)
         {
             _eventService = eventService;
+        }
+
+        // get events
+        [HttpGet]
+        public async Task<ActionResult<EventsListResponse>> GetEvents(int userId)
+        {
+            try
+            {
+                var response = await _eventService.GetEvents(userId);
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         // create event
@@ -41,5 +58,19 @@ namespace BingoBongoAPI.Controllers
         // delete event
 
         // join event
+        [HttpPost]
+        public async Task<ActionResult<JoinChannelResponse>> JoinEvent([FromBody] JoinEventRequest request)
+        {
+            try
+            {
+                var response = await _eventService.JoinEvent(request);
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

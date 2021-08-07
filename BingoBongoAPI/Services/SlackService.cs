@@ -1,5 +1,9 @@
 ﻿using BingoBongoAPI.Entities;
+using BingoBongoAPI.Models.Request;
+using BingoBongoAPI.Models.Response;
 using BingoBongoAPI.Services.Contracts;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -12,21 +16,42 @@ namespace BingoBongoAPI.Services
     public class SlackService : ISlackService
     {
         private readonly RestClient _client;
+        private const string token = "xoxb-2380245592192-2362846304372-da1vzTa8HjZZYvO3ENoq0PWy";
 
         public SlackService()
         {
             _client = new RestClient("https://slack.com/api/");
         }
 
-        public async Task CreateEvent(Event newEvent)
+        public SlackCreateChannelResponse CreateChannel(Event newEvent)
         {
-            var token = "xoxb-2380245592192-2362846304372-v00N4Juom2DMMpTGPrYb7JWN";
             var request = new RestRequest("conversations.create");
             request.AddParameter("name", newEvent.Name);
-            request.AddHeader("Authorization", token);
-            var response = _client.Post(request);
-            var content = response.Content; // Raw content as string
+            request.AddHeader("Authorization", $"Bearer {token}");
+            var slackResponse = _client.Post(request);
+            var json = slackResponse.Content; // Raw content as string
 
+            var jObject = JObject.Parse(json);
+
+            var response = new SlackCreateChannelResponse
+            {
+                Channel = new SlackChannel
+                {
+                    Id = jObject["channel"]["id"].ToString(),
+                }
+            };
+
+            return response;
+        }
+
+        public void JoinEvent(string channel, string slackUserId)
+        {
+            var request = new RestRequest("conversations.invite");
+            request.AddParameter("channel", channel);
+            request.AddParameter("users", slackUserId);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            var slackResponse = _client.Post(request);
+            //var json = slackResponse.Content; // Raw content as string
         }
     }
 }

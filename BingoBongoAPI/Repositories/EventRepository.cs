@@ -1,6 +1,7 @@
 ﻿using BingoBongoAPI.Entities;
 using BingoBongoAPI.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,5 +15,8 @@ namespace BingoBongoAPI.Repositories
 
         public async Task<Event> GetByName(string name) =>
             await _dbSet.FirstOrDefaultAsync(e => e.Name == name);
+
+        public async Task<IEnumerable<Event>> GetEvents() =>
+            await _dbSet.ToListAsync();
     }
 }

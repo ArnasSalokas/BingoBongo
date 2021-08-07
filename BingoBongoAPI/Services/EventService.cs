@@ -1,5 +1,6 @@
 ﻿using BingoBongoAPI.Entities;
 using BingoBongoAPI.Models.Request;
+using BingoBongoAPI.Models.Response;
 using BingoBongoAPI.Repositories.Contracts;
 using BingoBongoAPI.Services.Contracts;
 using BingoBongoAPI.Utils;
@@ -14,10 +15,23 @@ namespace BingoBongoAPI.Services
     {
         private readonly ISlackService _slackService;
         private readonly IEventRepository _eventRepository;
-        public EventService(ISlackService slackService, IEventRepository eventRepository)
+        private readonly IUserRepository _userRepository;
+        public EventService(ISlackService slackService, IEventRepository eventRepository, IUserRepository userRepository)
         {
             _slackService = slackService;
             _eventRepository = eventRepository;
+            _userRepository = userRepository;
+        }
+
+        public async Task<EventsListResponse> GetEvents(int userId)
+        {
+            var allEvents = await _eventRepository.GetEvents();
+
+            return new EventsListResponse
+            {
+                MyEvents = allEvents.Where(e => e.UserId == userId),
+                OtherEvents = allEvents.Where(e => e.UserId != userId),
+            };
         }
 
         public async Task<Event> CreateEvent(CreateEventRequest request)
@@ -37,15 +51,24 @@ namespace BingoBongoAPI.Services
 
             // check if has same name
             if (latestEvent != null)
-                newEvent.Name = latestEvent.Name + StringUtils.GetRandomWord();
+                newEvent.Name = latestEvent.Name + $"-{StringUtils.GetRandomWord()}";
+
+            // slack api event
+            var response = _slackService.CreateChannel(newEvent);
+
+            newEvent.ChannelId = response.Channel.Id;
 
             await _eventRepository.Add(newEvent);
 
-            // slack api event
-            await _slackService.CreateEvent(newEvent);
-
             return newEvent;
         }
-        
+
+        public async Task JoinEvent(JoinEventRequest request)
+        {
+            var user = await _userRepository.GetByKey(request.UserId);
+            var _event = await _eventRepository.GetByKey(request.EventId);
+
+            _slackService.JoinEvent(_event.ChannelId, user.SlackUserId);
+        }
     }
 }
