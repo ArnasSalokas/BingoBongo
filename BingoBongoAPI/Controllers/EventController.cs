@@ -53,9 +53,9 @@ namespace BingoBongoAPI.Controllers
             }
         }
 
-        // update event
-
-        // delete event
+        // TODO: update event
+        
+        // TODO: delete event
 
         // join event
         [HttpPost("join")]

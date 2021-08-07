@@ -1,4 +1,5 @@
-﻿using BingoBongoAPI.Entities.Interfaces;
+﻿using BingoBongoAPI.Entities.Enums;
+using BingoBongoAPI.Entities.Interfaces;
 using System;
 
 namespace BingoBongoAPI.Entities
@@ -11,5 +12,6 @@ namespace BingoBongoAPI.Entities
         public string Email { get; set; }
         public string Picture { get; set; }
         public DateTime Created { get; set; }
+        public UserType Type { get; set; }
     }
 }
