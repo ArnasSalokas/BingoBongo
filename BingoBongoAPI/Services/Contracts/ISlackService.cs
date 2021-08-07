@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BingoBongoAPI.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace BingoBongoAPI.Services.Contracts
 {
     public interface ISlackService
     {
+        public Task CreateEvent(Event newEvent);
     }
 }

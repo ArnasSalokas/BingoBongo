@@ -10,6 +10,7 @@ using BingoBongoAPI.Repositories;
 using BingoBongoAPI.Repositories.Contracts;
 using BingoBongoAPI.Services.Contracts;
 using BingoBongoAPI.Services;
+using System;
 
 namespace BingoBongoAPI
 {
@@ -32,6 +33,7 @@ namespace BingoBongoAPI
             AddDbContext(services);
             AddCorsPolicy(services);
             AddFluentMigrator(services, Configuration);
+            //AddHttpClient(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +88,13 @@ namespace BingoBongoAPI
             });
         }
 
+        //private void AddHttpClient(IServiceCollection services)
+        //{
+        //    services.AddHttpClient("slackClient", c =>
+        //    {
+        //        c.BaseAddress = new Uri("https://slack.com/api");
+        //    });
+        //}
 
         private void AddFluentMigrator(IServiceCollection services, IConfiguration config)
         {
