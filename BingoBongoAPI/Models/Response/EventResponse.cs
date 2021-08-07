@@ -20,6 +20,7 @@ namespace BingoBongoAPI.Models.Response
             Place = e.Place;
             Created = e.Created;
             ChannelId = e.ChannelId;
+            CreatorAvatar = e.CreatorAvatar;
             Joined = joined;
         }
     }
