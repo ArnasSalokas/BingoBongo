@@ -19,7 +19,7 @@ namespace BingoBongoAPI.Services
 
         public async Task<UserLoginResponse> CreateUser(CreateUserRequest request)
         {
-            var user = _userRepository.FindBySlackId(request.Id);
+            var user = _userRepository.FindBySlackId(request.SlackId);
 
             // Add User to DB for the first time, skip other times
             if (user != null)
@@ -32,7 +32,7 @@ namespace BingoBongoAPI.Services
             {
                 Created = DateTime.Now,
                 Email = request.Email,
-                SlackUserId = request.Id,
+                SlackUserId = request.SlackId,
                 Name = request.Name,
                 Picture = request.Avatar,
             };
