@@ -16,7 +16,7 @@ namespace BingoBongoAPI.Services
     public class SlackService : ISlackService
     {
         private readonly RestClient _client;
-        private const string token = "xoxb-2380245592192-2362846304372-6J9EKGtgRRg9fH0iH08J2y58";
+        private const string token = "xoxb-2380245592192-2362846304372-oiOJXq7mv2ZUSTIfnOu0ZJtq";
 
         public SlackService()
         {
