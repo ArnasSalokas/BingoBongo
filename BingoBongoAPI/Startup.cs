@@ -13,6 +13,7 @@ using BingoBongoAPI.Services.Contracts;
 using BingoBongoAPI.Services;
 using BingoBongoAPI.Repositories.Migrations;
 using System;
+using System.Threading;
 
 namespace BingoBongoAPI
 {
@@ -35,6 +36,7 @@ namespace BingoBongoAPI
             AddDbContext(services);
             AddCorsPolicy(services);
             AddFluentMigrator(services, Configuration);
+            RunMigrations(services);
             //AddHttpClient(services);
         }
 
@@ -74,7 +76,7 @@ namespace BingoBongoAPI
         {
             services.AddDbContext<BingoBongoContext>(options =>
             {
-                var connectionString = Configuration.GetConnectionString("BingoBongo");
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
         }
@@ -112,6 +114,20 @@ namespace BingoBongoAPI
                 // Enable logging to console in the FluentMigrator way
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
+        }
+
+        private static void UpdateDatabase(IServiceProvider serviceProvider)
+        {
+                // Instantiate the runner
+                var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+                // Execute the migrations
+                runner.MigrateUp();
+        }
+
+        private void RunMigrations(IServiceCollection services)
+        {
+            var servicesMigrationScope = services.BuildServiceProvider().CreateScope().ServiceProvider;
+            UpdateDatabase(servicesMigrationScope);
         }
 
         #endregion

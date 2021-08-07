@@ -30,7 +30,7 @@ namespace BingoBongoAPI.Controllers
 
                 return Ok(response);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest();
             }
@@ -40,6 +40,6 @@ namespace BingoBongoAPI.Controllers
 
         // delete event
 
-        // create channel
+        // join event
     }
 }

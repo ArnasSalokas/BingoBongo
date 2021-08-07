@@ -13,22 +13,24 @@ namespace BingoBongoAPI.Repositories.Migrations
         public override void Up()
         {
             Create.Table(nameof(User))
-                .WithIdColumn()
+                .WithColumn(nameof(User.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(User.Name)).AsMaxString().Nullable()
                 .WithColumn(nameof(User.Email)).AsMaxString().Nullable()
-                .WithColumn(nameof(User.Created)).AsDateTime2().NotNullable()
-                .WithColumn(nameof(User.Email)).AsMaxString().NotNullable()
+                .WithColumn(nameof(User.Created)).AsDateTime().NotNullable()
+                .WithColumn(nameof(User.Picture)).AsMaxString().Nullable()
                 .WithColumn(nameof(User.SlackUserId)).AsMaxString().Nullable();
 
             Create.Table(nameof(Event))
-                .WithIdColumn()
+                .WithColumn(nameof(Event.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(Event.Name)).AsMaxString()
                 .WithColumn(nameof(Event.Place)).AsMaxString()
-                .WithColumn(nameof(Event.Time)).AsDateTime2()
-                .WithColumn(nameof(Event.UserId)).AsInt32();
+                .WithColumn(nameof(Event.Time)).AsDateTime()
+                .WithColumn(nameof(Event.UserId)).AsInt32()
+            .WithColumn(nameof(Event.Description)).AsMaxString()
+            .WithColumn(nameof(Event.Created)).AsDateTime();
 
             Create.Table(nameof(UserEvent))
-                .WithIdColumn()
+                .WithColumn(nameof(UserEvent.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(UserEvent.UserId)).AsInt32()
                 .WithColumn(nameof(UserEvent.EventId)).AsInt32();
         }

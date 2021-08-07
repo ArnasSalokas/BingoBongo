@@ -2,16 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>74e521af-66e3-4811-b155-2c90e8413d5f</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <StartupObject>BingoBongoAPI.Program</StartupObject>
-    <Nullable>annotations</Nullable>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>ARM64</PlatformTarget>
-  </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="FluentMigrator" Version="3.2.17" />
     <PackageReference Include="FluentMigrator.Runner" Version="3.2.17" />
@@ -34,6 +26,5 @@
   <ItemGroup>
     <Folder Include="Infrastructure\Extensions\" />
   </ItemGroup>
-
 
 </Project>
