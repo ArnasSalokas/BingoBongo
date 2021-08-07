@@ -22,8 +22,8 @@ namespace BingoBongoAPI.Controllers
         }
 
         // get events
-        [HttpGet]
-        public async Task<ActionResult<EventsListResponse>> GetEvents(int userId)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<EventsListResponse>> GetEvents([FromRoute] int userId)
         {
             try
             {

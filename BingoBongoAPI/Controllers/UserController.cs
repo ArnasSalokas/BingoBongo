@@ -29,7 +29,7 @@ namespace BingoBongoAPI.Controllers
 
                 return Ok(response);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest();
             }

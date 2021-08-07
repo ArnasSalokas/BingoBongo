@@ -13,5 +13,6 @@ namespace BingoBongoAPI.Entities
 		public string Place { get; set; }
 		public DateTime Created { get; set; }
 		public string ChannelId { get; set; }
-	}
+        public string CreatorAvatar { get; set; }
+    }
 }

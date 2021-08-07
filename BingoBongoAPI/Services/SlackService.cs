@@ -16,7 +16,7 @@ namespace BingoBongoAPI.Services
     public class SlackService : ISlackService
     {
         private readonly RestClient _client;
-        private const string token = "xoxb-2380245592192-2362846304372-da1vzTa8HjZZYvO3ENoq0PWy";
+        private const string token = "xoxb-2380245592192-2362846304372-L3ITjqbT23Rvi0ktMlW9JGE8";
 
         public SlackService()
         {
@@ -26,7 +26,7 @@ namespace BingoBongoAPI.Services
         public SlackCreateChannelResponse CreateChannel(Event newEvent)
         {
             var request = new RestRequest("conversations.create");
-            request.AddParameter("name", newEvent.Name);
+            request.AddParameter("name", newEvent.Name.ToLower());
             request.AddHeader("Authorization", $"Bearer {token}");
             var slackResponse = _client.Post(request);
             var json = slackResponse.Content; // Raw content as string

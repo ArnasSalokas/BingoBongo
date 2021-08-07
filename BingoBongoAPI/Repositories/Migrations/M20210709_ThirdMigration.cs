@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace BingoBongoAPI.Repositories.Migrations
 {
-    [Migration(202107201046)]
-    public class M20210708_SecondMigration : Migration
+    [Migration(202107201259)]
+    public class M20210709_ThirdMigration : Migration
     {
         public override void Up()
         {
-            Alter.Table(nameof(User))
-                .AddColumn(nameof(User.Type)).AsInt32();
+            Alter.Table(nameof(Event))
+                .AddColumn(nameof(Event.CreatorAvatar)).AsString();
         }
 
         public override void Down()
