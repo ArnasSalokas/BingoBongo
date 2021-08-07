@@ -58,14 +58,14 @@ namespace BingoBongoAPI.Controllers
         // TODO: delete event
 
         // join event
-        [HttpPost]
-        public async Task<ActionResult<JoinChannelResponse>> JoinEvent([FromBody] JoinEventRequest request)
+        [HttpPost("join")]
+        public async Task<ActionResult> JoinEvent([FromBody] JoinEventRequest request)
         {
             try
             {
-                var response = await _eventService.JoinEvent(request);
+                await _eventService.JoinEvent(request);
 
-                return Ok(response);
+                return Ok();
             }
             catch (Exception e)
             {
