@@ -85,6 +85,10 @@ namespace BingoBongoAPI.Services
             if (exists)
                 return;
 
+            // Check if deadline is not yet expired
+            if (DateTime.Now + _event.DeadlineDuration >= _event.Time)
+                return;
+
             await _userEventRepository.Add(new UserEvent
             {
                 EventId = request.EventId,
