@@ -9,5 +9,6 @@ namespace BingoBongoAPI.Services.Contracts
     {
         public SlackCreateChannelResponse CreateChannel(Event newEvent);
         public void JoinEvent(string channel, string slackUserId);
+        void PostToMediapark(string name);
     }
 }

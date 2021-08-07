@@ -56,6 +56,8 @@ namespace BingoBongoAPI.Services
             if (latestEvent != null)
                 newEvent.Name = latestEvent.Name + $"-{StringUtils.GetRandomWord()}";
 
+            newEvent.Name = newEvent.Name.Replace(' ', '-');
+
             // slack api event
             var response = _slackService.CreateChannel(newEvent);
             var user = await _userRepository.GetByKey(request.UserId);
@@ -71,6 +73,9 @@ namespace BingoBongoAPI.Services
             });
 
             _slackService.JoinEvent(newEvent.ChannelId, user.SlackUserId);
+
+            //post to mediapark
+            //_slackService.PostToMediapark(newEvent.Name);
 
             return newEvent;
         }
