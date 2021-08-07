@@ -20,9 +20,10 @@ namespace BingoBongoAPI.Services
 
         public async Task CreateEvent(Event newEvent)
         {
+            var token = "xoxb-2380245592192-2362846304372-v00N4Juom2DMMpTGPrYb7JWN";
             var request = new RestRequest("conversations.create");
             request.AddParameter("name", newEvent.Name);
-            request.AddHeader("header", "value");
+            request.AddHeader("Authorization", token);
             var response = _client.Post(request);
             var content = response.Content; // Raw content as string
 
