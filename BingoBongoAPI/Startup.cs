@@ -63,6 +63,7 @@ namespace BingoBongoAPI
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IUserEventRepository, UserEventRepository>();
         }
 
         private void AddServices(IServiceCollection services)

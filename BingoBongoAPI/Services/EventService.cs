@@ -16,21 +16,24 @@ namespace BingoBongoAPI.Services
         private readonly ISlackService _slackService;
         private readonly IEventRepository _eventRepository;
         private readonly IUserRepository _userRepository;
-        public EventService(ISlackService slackService, IEventRepository eventRepository, IUserRepository userRepository)
+        private readonly IUserEventRepository _userEventRepository;
+        public EventService(ISlackService slackService, IEventRepository eventRepository, IUserRepository userRepository, IUserEventRepository userEventRepository)
         {
             _slackService = slackService;
             _eventRepository = eventRepository;
             _userRepository = userRepository;
+            _userEventRepository = userEventRepository;
         }
 
         public async Task<EventsListResponse> GetEvents(int userId)
         {
             var allEvents = await _eventRepository.GetEvents();
+            var joinedEvents = await _userEventRepository.GetEvents();
 
             return new EventsListResponse
             {
-                MyEvents = allEvents.Where(e => e.UserId == userId),
-                OtherEvents = allEvents.Where(e => e.UserId != userId),
+                MyEvents = allEvents.Where(e => e.UserId == userId).Select(e => new EventResponse(e, true)),
+                OtherEvents = allEvents.Where(e => e.UserId != userId).Select,
             };
         }
 
@@ -67,6 +70,17 @@ namespace BingoBongoAPI.Services
         {
             var user = await _userRepository.GetByKey(request.UserId);
             var _event = await _eventRepository.GetByKey(request.EventId);
+
+            var exists = _userEventRepository.UserEventExists(request);
+
+            if (exists)
+                return;
+
+            await _userEventRepository.Add(new UserEvent
+            {
+                EventId = request.EventId,
+                UserId = request.UserId,
+            });
 
             _slackService.JoinEvent(_event.ChannelId, user.SlackUserId);
         }
