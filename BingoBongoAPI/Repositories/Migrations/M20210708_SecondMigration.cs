@@ -18,7 +18,7 @@ namespace BingoBongoAPI.Repositories.Migrations
                 .AddColumn(nameof(User.Type)).AsInt32();
 
             Alter.Table(nameof(Event))
-                .AddColumn(nameof(Event.DeadlineDuration)).AsDateTimeOffset();
+                .AddColumn(nameof(Event.DeadlineDuration)).AsDateTimeOffset().Nullable();
         }
 
         public override void Down()

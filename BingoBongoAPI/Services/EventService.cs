@@ -58,8 +58,10 @@ namespace BingoBongoAPI.Services
 
             // slack api event
             var response = _slackService.CreateChannel(newEvent);
+            var user = await _userRepository.GetByKey(request.UserId);
 
             newEvent.ChannelId = response.Channel.Id;
+            newEvent.CreatorAvatar = user.Picture;
 
             await _eventRepository.Add(newEvent);
             await _userEventRepository.Add(new UserEvent
@@ -67,8 +69,6 @@ namespace BingoBongoAPI.Services
                 EventId = newEvent.Id,
                 UserId = request.UserId,
             });
-
-            var user = await _userRepository.GetByKey(request.UserId);
 
             _slackService.JoinEvent(newEvent.ChannelId, user.SlackUserId);
 
