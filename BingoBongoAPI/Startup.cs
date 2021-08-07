@@ -6,10 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using FluentMigrator.Runner;
+using Microsoft.Data;
 using BingoBongoAPI.Repositories;
 using BingoBongoAPI.Repositories.Contracts;
 using BingoBongoAPI.Services.Contracts;
 using BingoBongoAPI.Services;
+using BingoBongoAPI.Repositories.Migrations;
 
 namespace BingoBongoAPI
 {
@@ -93,10 +95,10 @@ namespace BingoBongoAPI
             services
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
-                    .AddSqlServer2014()
+                    .AddSqlServer2014()     
                     .WithGlobalConnectionString(config.GetDefaultConnection())
                     // Define the assembly containing the migrations
-                    .ScanIn(typeof(M201807201046_FirstMigration).Assembly).For.Migrations())
+                    .ScanIn(typeof(M20210708_FirstMigration).Assembly).For.Migrations())
                 // Enable logging to console in the FluentMigrator way
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BingoBongoAPI.Entities.Interfaces;
+using System;
 
 namespace BingoBongoAPI.Entities
 {
-    public class User
+    public class User : IEntity
     {
         public int Id { get; set; }
         public string SlackUserId { get; set; }
