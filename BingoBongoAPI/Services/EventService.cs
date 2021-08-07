@@ -28,12 +28,12 @@ namespace BingoBongoAPI.Services
         public async Task<EventsListResponse> GetEvents(int userId)
         {
             var allEvents = await _eventRepository.GetEvents();
-            var joinedEvents = await _userEventRepository.GetEvents();
+            var joinedEvents = await _userEventRepository.GetUsersEvents(userId);
 
             return new EventsListResponse
             {
                 MyEvents = allEvents.Where(e => e.UserId == userId).Select(e => new EventResponse(e, true)),
-                OtherEvents = allEvents.Where(e => e.UserId != userId).Select,
+                OtherEvents = allEvents.Where(e => e.UserId != userId).Select(e => new EventResponse(e, joinedEvents.Contains(e.Id)))
             };
         }
 

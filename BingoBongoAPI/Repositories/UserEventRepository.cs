@@ -1,6 +1,7 @@
 ﻿using BingoBongoAPI.Entities;
 using BingoBongoAPI.Models.Request;
 using BingoBongoAPI.Repositories.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,7 @@ namespace BingoBongoAPI.Repositories
 
             return entity == null ? false : true;
         }
+        public async Task<IEnumerable<int>> GetUsersEvents(int userId) =>
+            await _dbSet.Where(ue => ue.UserId == userId).Select(ue => ue.EventId).ToListAsync();
     }
 }
